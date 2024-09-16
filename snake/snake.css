@@ -1,0 +1,12 @@
+body{
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    background-color: gray;
+}
+button{
+    font-size: 25px;
+    margin-left: 47%;
+}
+#topScore{
+    position: fixed; top: 40px; right: 10px; color: white; font-size: 20px;
+}

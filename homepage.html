@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Hub</title>
+    <link rel="stylesheet" href="homepage.css">
+</head>
+<body>
+    <!-- Header với logo và thanh điều hướng -->
+    <header>
+        <div class="logo-container">
+            <img src="logo.png" alt="Game Hub Logo" id="logo">
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+            </ul>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search for games...">
+        </div>
+            <div class="user-info">
+                <span id="usernameDisplay"></span>
+                <button id="logoutButton">Logout</button>
+            </div>
+        </nav>
+    </header>
+    <!-- Phần nội dung với danh sách trò chơi -->
+    <div class="container">
+        <h2>Select a Mini-Game to Play</h2>
+        <div class="game-list" id="gameList">
+            <div class="game" data-name="Snake Game">
+                <img src="/snake/snake_thumbnail.jpg" alt="Snake Game">
+                <h3>Snake Game</h3>
+                <a href="/snake/snake.html" target="_blank">Play Now</a>
+            </div>
+            <div class="game" data-name="Pokemon Card Match">
+                <img src="/pokemon-match-cards/pokemon_thumbnail.webp" alt="Pokemon Card Match">
+                <h3>Pokemon Card Match</h3>
+                <a href="/pokemon-match-cards/pokemon_card.html" target="_blank">Play Now</a>
+            </div>
+            <!-- Add more games here -->
+        </div>
+    </div>
+
+    <script src="homepage.js"></script>
+</body>
+</html>
