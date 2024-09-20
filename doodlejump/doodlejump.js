@@ -1,8 +1,8 @@
-//khung
 let board;
 let boardWidth = 360;
 let boardHeight = 576;
 let context;
+let gameStarted = false;
 
 //doodler
 let doodlerWidth = 46;
@@ -56,16 +56,26 @@ window.onload = function() {
     platformImg.src = "./platform.png";
 
     velocityY = initialVelocityY;
-    placePlatforms();
+
     requestAnimationFrame(update);
+    document.addEventListener("keydown", startGame);
     document.addEventListener("keydown", moveDoodler);
 }
 
 function update() {
     requestAnimationFrame(update);
+    if (!gameStarted) {
+        context.clearRect(0, 0, board.width, board.height);
+        context.fillStyle = "black";
+        context.font = "24px sans-serif";
+        context.fillText("Press any button to start", boardWidth/6, boardHeight/2);
+        return;
+    }
+    
     if (gameOver) {
         return;
     }
+
     context.clearRect(0, 0, board.width, board.height);
 
     //doodler
@@ -84,7 +94,7 @@ function update() {
     }
     context.drawImage(doodler.img, doodler.x, doodler.y, doodler.width, doodler.height);
 
-    //platforms
+    //bề mặt nhảy:
     for (let i = 0; i < platformArray.length; i++) {
         let platform = platformArray[i];
         if (velocityY < 0 && doodler.y < boardHeight*3/4) {
@@ -109,6 +119,13 @@ function update() {
 
     if (gameOver) {
         context.fillText("Game Over: Press 'Space' to Restart", boardWidth/7, boardHeight*7/8);
+    }
+}
+
+function startGame(e) {
+    if (!gameStarted) {
+        gameStarted = true;
+        placePlatforms();
     }
 }
 
