@@ -3,14 +3,16 @@ var board = [];
 var rows = 9;
 var columns = 9;
 var score = 0;
-
+var bestScore = 0;  // Thêm biến để lưu điểm cao nhất
 var currTile;
 var otherTile;
 
 window.onload = function() {
+    loadBestScore(); // Tải điểm cao nhất khi bắt đầu game
     startGame();
 
-    window.setInterval(function() {
+    //1/10th of a second
+    window.setInterval(function(){
         crushCandy();
         slideCandy();
         generateCandy();
@@ -28,6 +30,7 @@ function startGame() {
             let tile = document.createElement("img");
             tile.id = r.toString() + "-" + c.toString();
             tile.src = "./images/" + randomCandy() + ".png";
+
             tile.addEventListener("dragstart", dragStart);
             tile.addEventListener("dragover", dragOver);
             tile.addEventListener("dragenter", dragEnter);
@@ -40,7 +43,6 @@ function startGame() {
         }
         board.push(row);
     }
-    removeInitialMatches();
 }
 
 function dragStart() {
@@ -55,7 +57,7 @@ function dragEnter(e) {
     e.preventDefault();
 }
 
-function dragLeave() { }
+function dragLeave() {}
 
 function dragDrop() {
     otherTile = this;
@@ -74,10 +76,10 @@ function dragEnd() {
     let r2 = parseInt(otherCoords[0]);
     let c2 = parseInt(otherCoords[1]);
 
-    let moveLeft = c2 == c-1 && r == r2;
-    let moveRight = c2 == c+1 && r == r2;
-    let moveUp = r2 == r-1 && c == c2;
-    let moveDown = r2 == r+1 && c == c2;
+    let moveLeft = c2 == c - 1 && r == r2;
+    let moveRight = c2 == c + 1 && r == r2;
+    let moveUp = r2 == r - 1 && c == c2;
+    let moveDown = r2 == r + 1 && c == c2;
 
     let isAdjacent = moveLeft || moveRight || moveUp || moveDown;
 
@@ -89,16 +91,18 @@ function dragEnd() {
 
         let validMove = checkValid();
         if (!validMove) {
-            currTile.src = currImg;
-            otherTile.src = otherImg;
+            let currImg = currTile.src;
+            let otherImg = otherTile.src;
+            currTile.src = otherImg;
+            otherTile.src = currImg;
+        } else {
+            setTimeout(() => saveBestScore(), 500); // Lưu điểm cao nhất sau khi di chuyển hợp lệ
         }
     }
 }
 
 function crushCandy() {
     crushThree();
-    crushFour();
-    crushFive();
     document.getElementById("score").innerText = score;
 }
 
@@ -106,8 +110,8 @@ function crushThree() {
     for (let r = 0; r < rows; r++) {
         for (let c = 0; c < columns - 2; c++) {
             let candy1 = board[r][c];
-            let candy2 = board[r][c+1];
-            let candy3 = board[r][c+2];
+            let candy2 = board[r][c + 1];
+            let candy3 = board[r][c + 2];
             if (candy1.src == candy2.src && candy2.src == candy3.src && !candy1.src.includes("blank")) {
                 candy1.src = "./images/blank.png";
                 candy2.src = "./images/blank.png";
@@ -120,8 +124,8 @@ function crushThree() {
     for (let c = 0; c < columns; c++) {
         for (let r = 0; r < rows - 2; r++) {
             let candy1 = board[r][c];
-            let candy2 = board[r+1][c];
-            let candy3 = board[r+2][c];
+            let candy2 = board[r + 1][c];
+            let candy3 = board[r + 2][c];
             if (candy1.src == candy2.src && candy2.src == candy3.src && !candy1.src.includes("blank")) {
                 candy1.src = "./images/blank.png";
                 candy2.src = "./images/blank.png";
@@ -132,86 +136,12 @@ function crushThree() {
     }
 }
 
-function crushFour() {
-    for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < columns - 3; c++) {
-            let candy1 = board[r][c];
-            let candy2 = board[r][c+1];
-            let candy3 = board[r][c+2];
-            let candy4 = board[r][c+3];
-            if (candy1.src == candy2.src && candy2.src == candy3.src && candy3.src == candy4.src && !candy1.src.includes("blank")) {
-                candy1.src = "./images/blank.png";
-                candy2.src = "./images/blank.png";
-                candy3.src = "./images/blank.png";
-                candy4.src = "./images/blank.png";
-                score += 60;
-            }
-        }
-    }
-
-    for (let c = 0; c < columns; c++) {
-        for (let r = 0; r < rows - 3; r++) {
-            let candy1 = board[r][c];
-            let candy2 = board[r+1][c];
-            let candy3 = board[r+2][c];
-            let candy4 = board[r+3][c];
-            if (candy1.src == candy2.src && candy2.src == candy3.src && candy3.src == candy4.src && !candy1.src.includes("blank")) {
-                candy1.src = "./images/blank.png";
-                candy2.src = "./images/blank.png";
-                candy3.src = "./images/blank.png";
-                candy4.src = "./images/blank.png";
-                score += 60;
-            }
-        }
-    }
-}
-
-function crushFive() {
-    for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < columns - 4; c++) {
-            let candy1 = board[r][c];
-            let candy2 = board[r][c+1];
-            let candy3 = board[r][c+2];
-            let candy4 = board[r][c+3];
-            let candy5 = board[r][c+4];
-            if (candy1.src == candy2.src && candy2.src == candy3.src && candy3.src == candy4.src && candy4.src == candy5.src && !candy1.src.includes("blank")) {
-                candy1.src = "./images/blank.png";
-                candy2.src = "./images/blank.png";
-                candy3.src = "./images/blank.png";
-                candy4.src = "./images/blank.png";
-                candy5.src = "./images/blank.png";
-                score += 100;
-            }
-        }
-    }
-
-    for (let c = 0; c < columns; c++) {
-        for (let r = 0; r < rows - 4; r++) {
-            let candy1 = board[r][c];
-            let candy2 = board[r+1][c];
-            let candy3 = board[r+2][c];
-            let candy4 = board[r+3][c];
-            let candy5 = board[r+4][c];
-            if (candy1.src == candy2.src && candy2.src == candy3.src && candy3.src == candy4.src && candy4.src == candy5.src && !candy1.src.includes("blank")) {
-                candy1.src = "./images/blank.png";
-                candy2.src = "./images/blank.png";
-                candy3.src = "./images/blank.png";
-                candy4.src = "./images/blank.png";
-                candy5.src = "./images/blank.png";
-                score += 100;
-            }
-        }
-    }
-}
-
-
-
 function checkValid() {
     for (let r = 0; r < rows; r++) {
         for (let c = 0; c < columns - 2; c++) {
             let candy1 = board[r][c];
-            let candy2 = board[r][c+1];
-            let candy3 = board[r][c+2];
+            let candy2 = board[r][c + 1];
+            let candy3 = board[r][c + 2];
             if (candy1.src == candy2.src && candy2.src == candy3.src && !candy1.src.includes("blank")) {
                 return true;
             }
@@ -221,8 +151,8 @@ function checkValid() {
     for (let c = 0; c < columns; c++) {
         for (let r = 0; r < rows - 2; r++) {
             let candy1 = board[r][c];
-            let candy2 = board[r+1][c];
-            let candy3 = board[r+2][c];
+            let candy2 = board[r + 1][c];
+            let candy3 = board[r + 2][c];
             if (candy1.src == candy2.src && candy2.src == candy3.src && !candy1.src.includes("blank")) {
                 return true;
             }
@@ -235,7 +165,7 @@ function checkValid() {
 function slideCandy() {
     for (let c = 0; c < columns; c++) {
         let ind = rows - 1;
-        for (let r = rows - 1; r >= 0; r--) {
+        for (let r = columns - 1; r >= 0; r--) {
             if (!board[r][c].src.includes("blank")) {
                 board[ind][c].src = board[r][c].src;
                 ind -= 1;
@@ -256,22 +186,15 @@ function generateCandy() {
     }
 }
 
-function removeInitialMatches() {
-    for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < columns; c++) {
-            while (checkInitialMatch(r, c)) {
-                board[r][c].src = "./images/" + randomCandy() + ".png";
-            }
-        }
-    }
+function loadBestScore() {
+    bestScore = localStorage.getItem("bestScore") || 0;
+    document.getElementById("bestScore").innerText = bestScore;
 }
 
-function checkInitialMatch(r, c) {
-    if (r > 1 && board[r][c].src == board[r-1][c].src && board[r][c].src == board[r-2][c].src) {
-        return true;
+function saveBestScore() {
+    if (score > bestScore) {
+        bestScore = score;
+        localStorage.setItem("bestScore", bestScore);
+        document.getElementById("bestScore").innerText = bestScore;
     }
-    if (c > 1 && board[r][c].src == board[r][c-1].src && board[r][c].src == board[r][c-2].src) {
-        return true;
-    }
-    return false;
 }
