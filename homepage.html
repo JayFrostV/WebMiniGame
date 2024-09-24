@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="homepage.css">
 </head>
 <body>
-    <!-- Header với logo và thanh điều hướng -->
+    <!-- Header with logo and navigation bar -->
     <header>
         <div class="logo-container">
             <img src="logo.png" alt="Game Hub Logo" id="logo">
@@ -15,6 +15,8 @@
         <nav>
             <ul class="nav-links">
                 <li><a href="#">Home</a></li>
+                <li><a href="#">Brain</a></li>
+                <li><a href="#">Hot</a></li>
             </ul>
         <div class="search-container">
             <input type="text" id="searchInput" placeholder="Search for games...">
@@ -25,29 +27,35 @@
             </div>
         </nav>
     </header>
-    <!-- Phần nội dung với danh sách trò chơi -->
+
+    <!-- Content with the list of games -->
     <div class="container">
         <h2>Select a Mini-Game to Play</h2>
         <div class="game-list" id="gameList">
-            <div class="game" data-name="Snake Game">
-                <img src="/snake/snake_thumbnail.jpg" alt="Snake Game">
+            <div class="game" data-name="Snake Game" data-category="Home">
+                <img src="snake/snake_thumbnail.jpg" alt="Snake Game">
                 <h3>Snake Game</h3>
-                <a href="/snake/snake.html" target="_blank">Play Now</a>
+                <a href="snake/snake.html" target="_blank">Play Now</a>
             </div>
-            <div class="game" data-name="Pokemon Card Match">
-                <img src="/pokemon-match-cards/pokemon_thumbnail.webp" alt="Pokemon Card Match">
+            <div class="game" data-name="Pokemon Card Match" data-category="Brain">
+                <img src="pokemon-match-cards/pokemon_thumbnail.webp" alt="Pokemon Card Match">
                 <h3>Pokemon Card Match</h3>
-                <a href="/pokemon-match-cards/pokemon_card.html" target="_blank">Play Now</a>
+                <a href="pokemon-match-cards/pokemon_card.html"_blank">Play Now</a>
             </div>
-            <div class="game" data-name="Candy Crush">
-                <img src="candycrush/Screenshot 2024-09-21 122910.png" alt="">
+            <div class="game" data-name="Candy Crush" data-category="Brain">
+                <img src="candycrush/Screenshot 2024-09-21 122910.png" alt="Candy Crush">
                 <h3>Candy Crush</h3>
                 <a href="candycrush/index.html" target="_blank">Play Now</a>
             </div>
-            <div class="game" data-name="DoodleJump">
-                <img src="doodlejump/Screenshot 2024-09-21 123853.png" alt="">
+            <div class="game" data-name="Doodle Jump" data-category="Hot">
+                <img src="doodlejump/Screenshot 2024-09-21 123853.png" alt="Doodle Jump">
                 <h3>Doodle Jump</h3>
                 <a href="doodlejump/doodlejump.html" target="_blank">Play Now</a>
+            </div>
+            <div class="game" data-name="Flappy Bird" data-category="Hot">
+                <img src="flappy-bird/Screenshot 2024-09-24 140408.png" alt="Flappy Bird">
+                <h3>Flappy Bird</h3>
+                <a href="flappy-bird/index.html" target="_blank">Play Now</a>
             </div>
         </div>
     </div>
