@@ -1,4 +1,3 @@
-// JavaScript for both login and register pages
 document.addEventListener("DOMContentLoaded", function() {
     const form = document.getElementById("registerForm") || document.getElementById("loginForm");
     
@@ -7,10 +6,17 @@ document.addEventListener("DOMContentLoaded", function() {
             e.preventDefault();
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmPassword") ? document.getElementById("confirmPassword").value : null;
             
             let users = JSON.parse(localStorage.getItem("users")) || {};
             
             if (form.id === "registerForm") {
+                // Check if passwords match
+                if (password !== confirmPassword) {
+                    alert("Passwords do not match. Please try again.");
+                    return;
+                }
+
                 // Registration logic
                 if (users[username]) {
                     alert("Username already exists. Please choose a different one.");
