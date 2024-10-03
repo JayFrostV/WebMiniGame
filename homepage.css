@@ -7,10 +7,25 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #bdc3c7;
     margin: 0;
     padding: 0;
 }
+body {
+    background-image: url('pixel.gif');
+    background-repeat: repeat-x; 
+    background-size: cover; 
+    animation: move-background 10s linear infinite;
+  }
+  
+  @keyframes move-background {
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: -100% 0;
+    }
+  }
+  
 
 header {
     background-color: white;
@@ -79,7 +94,7 @@ nav {
     width: 90%;
     max-width: 1200px;
     margin: 20px auto;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.719);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -94,6 +109,7 @@ h2 {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
+    padding-bottom: 50px;
     gap: 20px;
 }
 
@@ -102,13 +118,13 @@ h2 {
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    width: 200px;
+    width: 300px;
     text-align: center;
     transition: transform 0.3s ease;
 }
-
 .game:hover {
     transform: scale(1.05);
+    background-color: #f9f9f999;
 }
 
 .game img {
