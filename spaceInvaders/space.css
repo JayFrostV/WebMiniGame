@@ -1,0 +1,19 @@
+body {
+    font-family:'Courier New', Courier, monospace;
+    text-align: center;
+}
+
+#board {
+    background-color: black;
+}
+
+#restart{
+    width: 100px ;
+    height: 30px;
+    color: white;
+    background-color: gray;
+
+}
+#restart:hover{
+    background-color: rgb(82, 80, 80);
+}
