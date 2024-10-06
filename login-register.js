@@ -29,7 +29,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 users[username] = { password: password, highestScore: 0 };
                 localStorage.setItem("users", JSON.stringify(users));
 
-                alert("Registration successful! Please wait...");
                 
                 setTimeout(() => {
                     window.location.href = "login.html"; 
@@ -45,7 +44,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 localStorage.setItem("username", username);
 
-                alert("Login successful! Please wait...");
                 
                 setTimeout(() => {
                     window.location.href = "homepage.html"; 
