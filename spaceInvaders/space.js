@@ -43,6 +43,10 @@ let bulletVelocityY = -10; // bullet moving speed
 let score = 0;
 let gameOver = false;
 
+// Variables for high score and current user
+let currentUser = localStorage.getItem("username") || "Guest"; // Lấy tên người chơi từ localStorage
+let highestScore = parseInt(localStorage.getItem("highestScore")) || 0; // Lấy điểm cao nhất từ localStorage
+
 window.onload = function () {
     board = document.getElementById("board");
     board.width = boardWidth;
@@ -66,12 +70,21 @@ window.onload = function () {
 
     // Event listener for the Restart button
     document.getElementById("restart").addEventListener("click", restartGame);
+    
+    // Cập nhật giao diện người dùng với tên người chơi và điểm cao nhất
+    document.getElementById("currentUser").innerText = "Current Player: " + currentUser;
+    document.getElementById("highestScoreDisplay").innerText = "Highest Score: " + highestScore;
 };
 
 function update() {
     requestAnimationFrame(update);
 
     if (gameOver) {
+        if (score > highestScore) {
+            highestScore = score; // Cập nhật điểm cao nhất nếu điểm hiện tại cao hơn
+            localStorage.setItem("highestScore", highestScore); // Lưu điểm cao nhất vào localStorage
+            document.getElementById("highestScoreDisplay").innerText = "Highest Score: " + highestScore; // Cập nhật hiển thị điểm cao nhất
+        }
         return;
     }
 
@@ -207,20 +220,11 @@ function detectCollision(a, b) {
 }
 
 function restartGame() {
-    // Reset game variables
-    
-    alienRows = 2;
-    alienColumns = 3;
-    alienCount = 0; // number of aliens to defeat
-    alienVelocityX = 1; // alien moving speed
-    ship.x = shipX;
-    ship.y = shipY;
-    alienArray = [];
-    bulletArray = [];
     score = 0;
     gameOver = false;
-
-    // Recreate aliens
+    bulletArray = [];
+    alienArray = [];
     createAliens();
-    document.getElementById("restart").blur();
+    document.getElementById("highestScoreDisplay").innerText = "Highest Score: " + highestScore; // Cập nhật lại hiển thị điểm cao nhất
+    requestAnimationFrame(update);
 }
